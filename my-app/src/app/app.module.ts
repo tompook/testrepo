@@ -9,7 +9,7 @@ import {
   EventService,
   EventRouteActivatorService,
   EventsListResolverService
-} from './events/index';
+} from './events';
 import { NavbarComponent } from './nav/navbar.component';
 import { appRoutes } from './routes';
 import { RouterModule } from '@angular/router';
