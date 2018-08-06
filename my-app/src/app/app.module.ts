@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import {
   EventsListComponent,
@@ -7,7 +8,6 @@ import {
   EventDetailsComponent,
   CreateEventComponent,
   EventService,
-  EventRouteActivatorService,
   EventsListResolverService,
   SessionListComponent,
   CreateSessionComponent,
@@ -23,6 +23,7 @@ import { EventsAppComponent } from './events-app.component';
 import { AuthService } from './user/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SimpleModalComponent } from './common/simple-modal/simple-modal.component';
+import { EventsResolverService } from './events/event-resolver.service';
 
 let toastr: Toastr = window['toastr'];
 let jQuery = window['$'];
@@ -48,13 +49,14 @@ let jQuery = window['$'];
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     EventService,
     { provide: TOASTR_TOKEN, useValue: toastr },
     { provide: JQ_TOKEN, useValue: jQuery },
-    EventRouteActivatorService,
+    EventsResolverService,
     {
       provide: 'canDeactivateCreateEvent',
       useValue: checkDirtyState
