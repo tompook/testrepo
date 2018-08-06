@@ -18,15 +18,13 @@
                 href="">Create Event</a>
           </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" (click)="loadEventList()" type="button">
               Events
               <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu">
-              <li >
-                <a href="">Angular Connect</a>
-              </li>
-            </ul>
+            <div class="dropdown-menu pointable" aria-labelledby="dropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+              <li class="dropdown-item pointable" *ngFor="let event of events" value={{event.name}} [routerLink]="['/events', event.id]">{{event.name | uppercase}}</li>
+            </div>
           </li>
         </ul>
         <div class="navbar-header navbar-right">
