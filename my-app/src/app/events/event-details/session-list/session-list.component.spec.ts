@@ -1,25 +1,43 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ISession } from '../../shared/event.model';
 import { SessionListComponent } from './session-list.component';
 
 describe('SessionListComponent', () => {
-  let component: SessionListComponent;
-  let fixture: ComponentFixture<SessionListComponent>;
+    let component: SessionListComponent;
+    let mockAuthService, mockVoterService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SessionListComponent ]
+    beforeEach(() => {
+        component = new SessionListComponent(mockAuthService, mockVoterService);
+    });
+
+    describe('ngOnChanges', () => {
+        it('should filter the sessions correctly', () => {
+            component.sessions = <ISession[]>[
+                {name: 'session 1', level: 'intermediate'},
+                {name: 'session 2', level: 'intermediate'},
+                {name: 'session 3', level: 'beginner'}
+            ]
+            component.filterBy = 'intermediate';
+            component.sortBy = 'name';
+            component.eventId = 3;
+
+            component.ngOnChanges();
+
+            expect(component.visibleSessions.length).toBe(2);
+        })
+
+        it('should sort the sessions correctly', () => {
+            component.sessions = <ISession[]>[
+                {name: 'session 3', level: 'intermediate'},
+                {name: 'session 1', level: 'intermediate'},
+                {name: 'session 2', level: 'beginner'}
+            ]
+            component.filterBy = 'all';
+            component.sortBy = 'name';
+            component.eventId = 3;
+
+            component.ngOnChanges();
+
+            expect(component.visibleSessions[2].name).toBe('session 3');
+        })
     })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SessionListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+})
